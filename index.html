@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Cotización</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="inputs">
+            <div class="form-group">
+                <label for="location">De dónde eres:</label>
+                <select id="location" onchange="updateSubscriptionOptions()">
+                    <option value="">Selecciona una opción</option>
+                    <option value="Torreón">Torreón</option>
+                    <option value="Resto de México">Resto de México</option>
+                </select>
+            </div>
+            <div class="form-group" id="subscription-group">
+                <label for="subscription">Suscripción:</label>
+                <select id="subscription" onchange="updateFields()">
+                    <option value="">Selecciona una opción</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price">Precio USD:</label>
+                <input type="number" id="price" placeholder="0" step="0.01">
+            </div>
+            <div class="form-group" id="weight-group" style="display: none;">
+                <label for="weight">Peso de tu pedido en kg:</label>
+                <input type="number" id="weight" placeholder="0" step="0.01" oninput="updateFields()">
+            </div>
+            <div class="form-group" id="shipping-group" style="display: none;">
+                <!-- Removed the dropdown for "Resto de Mexico" -->
+            </div>
+            <div class="form-group" id="free-shipping-group" style="display: none;">
+                <label for="free-shipping">Flete El Paso - Torreón</label>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="free-shipping" checked disabled>
+                    <label for="free-shipping">Gratis</label>
+                </div>
+            </div>
+        </div>
+        <div class="results">
+            <div class="result-item">
+                <span class="label" id="orderCostLabel">Costo de tu pedido:</span>
+                <br>
+                <br>
+                <span class="value" id="orderCost">$0.00</span>
+                <span class="label" id="orderCost">USD</span>
+            </div>
+            <div class="result-item">
+                <span class="label" id="totalCostLabel">Costo Total:</span>
+                <br>
+                <span class="value" id="totalCost">$0.00</span>
+                <span class="label" id="totalCost">USD</span>
+                <br>
+                <span class="text" id="shippingCostLabel">Más</span>
+                <span class="text" id="shippingCost">$0.00</span>
+                <span class="text" id="shippingCost">MXN</span>
+                <span class="text" id="shippingCostLabel">de envio</span>
+            </div>
+            <div class="text">El cobro es en MXN y se toma el tipo de cambio al dia de la importación
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
