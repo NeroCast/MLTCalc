@@ -19,7 +19,13 @@ const shippingCosts = {
     'Supreme': 300
 };
 
-// Actualizar las opciones de suscripción al seleccionar la ubicación
+const weightLimits = {
+    'Básica': 5,
+    'Plus': 5,
+    'Premium': 10,
+    'Supreme': 30
+};
+
 function updateSubscriptionOptions() {
     const location = document.getElementById('location').value;
     const subscription = document.getElementById('subscription');
@@ -52,23 +58,20 @@ function updateSubscriptionOptions() {
             subscription.appendChild(option);
         }
     }
-    
-    calculateCost();
+
+    calculateCost();  // Llamamos a calculateCost para que los valores se actualicen inmediatamente
 }
 
-// Actualizar los campos según la suscripción y ubicación seleccionadas
 function updateFields() {
     const subscriptionType = document.getElementById('subscription').value;
     const location = document.getElementById('location').value;
     const weightGroup = document.getElementById('weight-group');
     const shippingGroup = document.getElementById('shipping-group');
     const freeShippingGroup = document.getElementById('free-shipping-group');
-    const shippingCostText = document.querySelector('#shippingCost ~ .text:last-of-type'); // Selecciona el texto de "por costo de envío a tu ciudad"
+    const shippingCostLabel = document.querySelector("#shippingCostLabel span.text");
 
-    // Ocultar el texto por defecto
-    shippingCostText.style.display = 'none';
+    if (!shippingCostLabel) return;
 
-    // Configurar la visibilidad y el texto según la ubicación y la suscripción
     if (location === 'Torreón') {
         if (subscriptionType === 'Supreme') {
             weightGroup.style.display = 'none';
@@ -81,40 +84,31 @@ function updateFields() {
         weightGroup.style.display = 'none';
         shippingGroup.style.display = 'none';
         freeShippingGroup.style.display = 'none';
-        
-        // Mostrar el texto solo si la ubicación es "Resto de México"
-        shippingCostText.style.display = 'inline';
-
-        // Modificar el texto según el tipo de suscripción
-        if (subscriptionType === 'Básica' || subscriptionType === 'Plus') {
-            shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 5 kg';
-        } else if (subscriptionType === 'Premium') {
-            shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 10 kg';
-        } else if (subscriptionType === 'Supreme') {
-            shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 30 kg';
-        } else {
-            shippingCostText.textContent = 'por costo de envío a tu ciudad'; // Si no hay suscripción seleccionada
-        }
     }
 
-    // Actualizar los cálculos inmediatamente con los datos disponibles
+    // Actualizar el texto de peso límite
+    if (subscriptionType) {
+        const limit = weightLimits[subscriptionType] || 5;
+        shippingCostLabel.textContent = `por costo de envío a tu ciudad, hasta ${limit} kg`;
+    }
+
     calculateCost();
 }
 
-// Calcular el costo de la orden y del envío
 function calculateCost() {
-    const price = parseFloat(document.getElementById('price').value) || 0;
+    const priceElement = document.getElementById('price');
+    const price = parseFloat(priceElement ? priceElement.value : 0) || 0;
     const subscriptionType = document.getElementById('subscription').value;
     const location = document.getElementById('location').value;
-    
+
     let subscriptionMultiplier = 1;
-    let weight = parseFloat(document.getElementById('weight').value) || 0;
+    let weight = parseFloat(document.getElementById('weight') ? document.getElementById('weight').value : 0) || 0;
     let shippingCost = 0;
 
     if (location && subscriptionValues[location] && subscriptionValues[location][subscriptionType]) {
         subscriptionMultiplier = subscriptionValues[location][subscriptionType];
     }
-    
+
     const orderCost = price * subscriptionMultiplier;
 
     if (location === 'Torreón') {
@@ -127,10 +121,18 @@ function calculateCost() {
         shippingCost = shippingCosts[subscriptionType] || 0;
     }
 
-    const totalCost = orderCost + shippingCost;
+    // Actualizamos los valores solo si los elementos existen
+    const orderCostElement = document.getElementById('orderCost');
+    const shippingCostElement = document.getElementById('shippingCost');
 
-    // Actualizar los valores en la interfaz
-    document.getElementById('orderCost').textContent = `$${orderCost.toFixed(2)}`;
-    document.getElementById('shippingCost').textContent = `$${shippingCost.toFixed(2)}`;
-    document.getElementById('totalCost').textContent = `$${totalCost.toFixed(2)}`;
+    if (orderCostElement) {
+        orderCostElement.textContent = `$${orderCost.toFixed(2)}`;
+    }
+
+    if (shippingCostElement) {
+        shippingCostElement.textContent = `$${shippingCost.toFixed(2)}`;
+    }
 }
+
+// Escuchar cambios inmediatos en el campo de precio
+document.getElementById('price').addEventListener('input', calculateCost);
