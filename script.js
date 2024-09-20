@@ -51,6 +51,8 @@ function updateSubscriptionOptions() {
             subscription.appendChild(option);
         }
     }
+    
+    calculateCost();
 }
 
 function updateFields() {
@@ -59,6 +61,9 @@ function updateFields() {
     const weightGroup = document.getElementById('weight-group');
     const shippingGroup = document.getElementById('shipping-group');
     const freeShippingGroup = document.getElementById('free-shipping-group');
+    const shippingCostText = document.querySelector('#shippingCost ~ .text:last-of-type');
+
+    shippingCostText.style.display = 'none';
 
     if (location === 'Torreón') {
         if (subscriptionType === 'Supreme') {
@@ -72,6 +77,8 @@ function updateFields() {
         weightGroup.style.display = 'none';
         shippingGroup.style.display = 'none';
         freeShippingGroup.style.display = 'none';
+        
+        shippingCostText.style.display = 'inline';
     }
 
     calculateCost();
@@ -102,7 +109,7 @@ function calculateCost() {
         shippingCost = shippingCosts[subscriptionType] || 0;
     }
 
-    const totalCost = orderCost;
+    const totalCost = orderCost + shippingCost;
 
     document.getElementById('orderCost').textContent = `$${orderCost.toFixed(2)}`;
     document.getElementById('shippingCost').textContent = `$${shippingCost.toFixed(2)}`;
