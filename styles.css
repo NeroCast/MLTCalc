@@ -1,3 +1,4 @@
+/* Estilos generales */
 body {
     display: flex;
     justify-content: center;
@@ -6,6 +7,7 @@ body {
     margin: 0;
     background-color: #f4f4f4;
     font-family: 'Arial', sans-serif;
+    padding: 20px; /* Añadido para mejorar en móviles */
 }
 
 .calculator {
@@ -15,9 +17,10 @@ body {
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff; 
+    background-color: #fff;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap; /* Permitir flexibilidad en pantallas pequeñas */
 }
 
 .inputs,
@@ -30,12 +33,17 @@ body {
 
 .inputs {
     align-items: flex-start;
+    width: 55%; /* Ajuste para pantallas grandes */
 }
 
 .results {
     align-items: flex-start;
     text-align: left;
     padding: 15px;
+    width: 40%; /* Ajuste para pantallas grandes */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 .form-group {
@@ -106,17 +114,6 @@ select {
     margin-right: 8px;
 }
 
-.results {
-    background-color: #f9f9f9; 
-    padding: 20px; 
-    border-radius: 8px; 
-    width: 40%;
-}
-
-.inputs {
-    width: 55%; 
-}
-
 .summary-text {
     font-size: 18px;
     font-weight: bold;
@@ -126,4 +123,65 @@ select {
 .text {
     font-size: 12px;
     font-weight: bold;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .calculator {
+        flex-direction: column; /* Cambiar a una sola columna en pantallas pequeñas */
+        padding: 15px;
+    }
+
+    .inputs,
+    .results {
+        width: 100%; /* Tomar todo el ancho disponible */
+        padding: 10px;
+    }
+
+    .results .result-item:not(:last-child)::after {
+        width: 100%; /* Ajustar el ancho de la línea */
+    }
+
+    .total-cost {
+        font-size: 28px; /* Reducir el tamaño del texto en pantallas pequeñas */
+    }
+    
+    input[type="number"],
+    select {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calculator {
+        padding: 10px;
+    }
+
+    .inputs,
+    .results {
+        padding: 5px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input[type="number"],
+    select {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .total-cost {
+        font-size: 24px;
+    }
+
+    .description {
+        font-size: 12px;
+    }
+
+    .text {
+        font-size: 10px;
+    }
 }
