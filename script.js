@@ -90,7 +90,7 @@ function calculateCost() {
         subscriptionMultiplier = subscriptionValues[location][subscriptionType];
     }
     
-    const orderCost = price * subscriptionMultiplier + price;
+    const orderCost = price * subscriptionMultiplier;
 
     if (location === 'Torreón') {
         if (subscriptionType === 'Supreme') {
