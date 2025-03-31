@@ -15,7 +15,7 @@ const shippingCosts = {
 // Actualizar las opciones de suscripción al seleccionar la ubicación
 function updateSubscriptionOptions() {
     const location = document.getElementById('location').value;
-    const subscription = document.getElementById('subscription');
+    const subscription = document.getElementById('Subscription');
     const weightGroup = document.getElementById('weight-group');
     const shippingGroup = document.getElementById('shipping-group');
     const freeShippingGroup = document.getElementById('free-shipping-group');
@@ -57,10 +57,10 @@ function updateFields() {
         freeShippingGroup.style.display = 'none';
         
         // Mostrar el texto solo si la ubicación es "Resto de México"
-        shippingCostText.style.display = 'inline';
+
 
         // Modificar el texto según el tipo de suscripción
-        if (subscriptionType === '3 Meses' || subscriptionType === 'Plus') {
+        if (subscriptionType === '3 Meses') {
             shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 5 kg';
         } else if (subscriptionType === '6 Meses') {
             shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 5 kg';
