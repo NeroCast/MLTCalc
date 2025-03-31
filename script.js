@@ -27,7 +27,7 @@ function updateSubscriptionOptions() {
         shippingGroup.style.display = 'none'; 
         freeShippingGroup.style.display = 'none';
 
-        for (const [key, value] of Object.entries(subscriptionValues['Suscripcion'])) {
+        for (const [key, value] of Object.entries(subscriptionValues['subscription'])) {
             const option = document.createElement('option');
             option.value = key;
             option.textContent = key;
