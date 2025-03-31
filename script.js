@@ -22,7 +22,7 @@ function updateSubscriptionOptions() {
 
     subscription.innerHTML = '<option value="">Selecciona una opción</option>';
 
-    if (location === 'Resto de México') {
+    if (location === 'Suscripcion') {
         weightGroup.style.display = 'none';
         shippingGroup.style.display = 'none'; 
         freeShippingGroup.style.display = 'none';
