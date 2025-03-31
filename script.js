@@ -1,22 +1,15 @@
 const subscriptionValues = {
-    'Torreón': {
-        'Beta': 0.35,
-        'Básica': 0.25,
-        'Supreme': 0.20
-    },
-    'Resto de México': {
-        'Básica': 0.35,
-        'Plus': 0.25,
-        'Premium': 0.22,
-        'Supreme': 0.20
+    'Suscripcion': {
+        '3 Meses': 0.25,
+        '6 Meses': 0.22,
+        '12 Meses': 0.20
     }
 };
 
 const shippingCosts = {
-    'Básica': 400,
-    'Plus': 400,
-    'Premium': 350,
-    'Supreme': 300
+    '3 Meses': 300,
+    '6 Meses': 300,
+    '12 Meses': 300
 };
 
 // Actualizar las opciones de suscripción al seleccionar la ubicación
@@ -29,23 +22,12 @@ function updateSubscriptionOptions() {
 
     subscription.innerHTML = '<option value="">Selecciona una opción</option>';
 
-    if (location === 'Torreón') {
-        weightGroup.style.display = 'block';
-        shippingGroup.style.display = 'none';
-        freeShippingGroup.style.display = 'none';
-
-        for (const [key, value] of Object.entries(subscriptionValues['Torreón'])) {
-            const option = document.createElement('option');
-            option.value = key;
-            option.textContent = key;
-            subscription.appendChild(option);
-        }
-    } else if (location === 'Resto de México') {
+    if (location === 'Resto de México') {
         weightGroup.style.display = 'none';
         shippingGroup.style.display = 'none'; 
         freeShippingGroup.style.display = 'none';
 
-        for (const [key, value] of Object.entries(subscriptionValues['Resto de México'])) {
+        for (const [key, value] of Object.entries(subscriptionValues['Suscripcion'])) {
             const option = document.createElement('option');
             option.value = key;
             option.textContent = key;
@@ -69,15 +51,7 @@ function updateFields() {
     shippingCostText.style.display = 'none';
 
     // Configurar la visibilidad y el texto según la ubicación y la suscripción
-    if (location === 'Torreón') {
-        if (subscriptionType === 'Supreme') {
-            weightGroup.style.display = 'none';
-            freeShippingGroup.style.display = 'block';
-        } else {
-            weightGroup.style.display = 'block';
-            freeShippingGroup.style.display = 'none';
-        }
-    } else if (location === 'Resto de México') {
+    if (location === 'Suscripcion') {
         weightGroup.style.display = 'none';
         shippingGroup.style.display = 'none';
         freeShippingGroup.style.display = 'none';
@@ -86,12 +60,12 @@ function updateFields() {
         shippingCostText.style.display = 'inline';
 
         // Modificar el texto según el tipo de suscripción
-        if (subscriptionType === 'Básica' || subscriptionType === 'Plus') {
+        if (subscriptionType === '3 Meses' || subscriptionType === 'Plus') {
             shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 5 kg';
-        } else if (subscriptionType === 'Premium') {
-            shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 10 kg';
-        } else if (subscriptionType === 'Supreme') {
-            shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 30 kg';
+        } else if (subscriptionType === '6 Meses') {
+            shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 5 kg';
+        } else if (subscriptionType === '12 Meses') {
+            shippingCostText.textContent = 'por costo de envío a tu ciudad, hasta 5 kg';
         } else {
             shippingCostText.textContent = 'por costo de envío a tu ciudad'; // Si no hay suscripción seleccionada
         }
@@ -117,13 +91,7 @@ function calculateCost() {
     
     const orderCost = price * subscriptionMultiplier;
 
-    if (location === 'Torreón') {
-        if (subscriptionType === 'Supreme') {
-            shippingCost = 0;
-        } else {
-            shippingCost = weight * 20;
-        }
-    } else if (location === 'Resto de México') {
+    if (location === 'Suscripcion') {
         shippingCost = shippingCosts[subscriptionType] || 0;
     }
 
