@@ -15,7 +15,7 @@ const shippingCosts = {
 // Actualizar las opciones de suscripción al seleccionar la ubicación
 function updateSubscriptionOptions() {
     const location = document.getElementById('location').value;
-    const subscription = document.getElementById('Subscription');
+    const subscription = document.getElementById('subscription');
     const weightGroup = document.getElementById('weight-group');
     const shippingGroup = document.getElementById('shipping-group');
     const freeShippingGroup = document.getElementById('free-shipping-group');
